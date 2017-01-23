@@ -46,22 +46,22 @@ if (stylusExists && !cssNextExists) {
 module.exports = function () {
   return function (config) {
     var stylusQuery = cssLoader + "?-autoprefixer!" + stylusLoader;
-    var cssQuery = cssLoader + "?modules&-autoprefixer!" + postcssLoader;
+    var cssQuery = cssLoader + "?modules&-autoprefixer!" + postcssLoader + "!" + stylusLoader;
 
     // By default, this archetype assumes you are using CSS-Modules + CSS-Next
     var loaders = [{
       name: "extract-css",
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract(styleLoader, cssQuery)
+      loader: ExtractTextPlugin.extract(styleLoader, cssQuery, {publicPath: ""})
     }];
 
-    if (!cssModuleSupport) {
+    // if (!cssModuleSupport) {
       loaders.push({
         name: "extract-stylus",
         test: /\.styl$/,
-        loader: ExtractTextPlugin.extract(styleLoader, stylusQuery)
+        loader: ExtractTextPlugin.extract(styleLoader, cssQuery, {publicPath: "" })
       });
-    }
+    // }
 
     return mergeWebpackConfig(config, {
       module: {
@@ -71,13 +71,6 @@ module.exports = function () {
         return cssModuleSupport ? [atImport, cssnext({
           browsers: ["last 2 versions", "ie >= 9", "> 5%"]
         })] : [];
-      },
-      stylus: {
-        use: function() {
-          return !cssModuleSupport ? [autoprefixer({
-            browsers: ["last 2 versions", "ie >= 9", "> 5%"]
-          })] : [];
-        }
       },
       plugins: [
         new ExtractTextPlugin(config.__wmlMultiBundle
