@@ -195,18 +195,18 @@ function makeTasks(gulp) {
         .pipe(envify({
           NODE_ENV: "production"
         }))
-        .pipe(uglify({
-          compress: {
-            sequences: false,
-            dead_code: true,
-            drop_debugger: true
-          },
-          output: {
-            beautify: false,
-            comments: false,
-            bracketize: true
-          }
-        }))
+        // .pipe(uglify({
+        //   compress: {
+        //     sequences: false,
+        //     dead_code: true,
+        //     drop_debugger: true
+        //   },
+        //   output: {
+        //     beautify: false,
+        //     comments: false,
+        //     bracketize: true
+        //   }
+        // }))
         .pipe(gulp.dest(prodPath))
         .on("error", reject)
         .on("end", resolve))
