@@ -1,8 +1,0 @@
----
-extends:
-  - "./.eslintrc-react"
-globals:
-  document: false
-rules:
-  "complexity": "off"
-  "max-len": "off"
